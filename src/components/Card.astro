@@ -1,7 +1,7 @@
 ---
 export interface CardProps {
-  title: string;
-  body: string;
+  title?: string;
+  body?: string;
   dark?: boolean;
 }
 
@@ -9,8 +9,18 @@ const { title, body, dark = false } = Astro.props as CardProps;
 ---
 
 <div class={`card ${dark && "dark"}`}>
-  <h3>{title}</h3>
-  <p>{body}</p>
+  {
+    Boolean(title && body) ? (
+      <>
+        <h3>{title}</h3>
+        <p>{body}</p>
+      </>
+    ) : (
+      <>
+        <slot />
+      </>
+    )
+  }
 </div>
 
 <style>
